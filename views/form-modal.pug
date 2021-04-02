@@ -1,0 +1,50 @@
+.modal
+  .modal-background(onclick='toggleModal()')
+  .modal-content
+    #form.box
+      .field.is-grouped
+        .control.is-expanded
+          input#nome.input(type='text' placeholder='Nome')
+        .control
+          input#idade.input(type='text' size='3' placeholder='Idade')
+      .field
+        .control
+          input#login.input(
+            type='text' placeholder='Nome de Usuário Github'
+          )
+      hr
+      .field.is-grouped
+        .control: input#cep.input(type='text' placeholder='CEP')
+        .control
+          button.button.is-link.is-outlined(type='button' onclick='searchCep()') Buscar CEP
+      .field.is-grouped
+        .control.is-expanded
+          input#logradouro.input(
+            type='text' placeholder='Logradouro'
+          )
+        .control
+          input#numero.input(
+            type='text' size='6' placeholder='Número'
+          )
+      .field
+        .control
+          input#complemento.input(
+            type='text' placeholder='Complemento'
+          )
+      .field
+        .control
+          input#bairro.input(type='text' placeholder='Bairro')
+      .field.is-grouped
+        .control.is-expanded
+          input#localidade.input(
+            type='text' placeholder='Localidade'
+          )
+        .control
+          input#uf.input(type='text' size='2' placeholder='UF')
+      .buttons.is-right
+        button#submit.button.is-success(type='button') Salvar
+        button.button(
+          type='button'
+          onclick='toggleModal()'
+        ) Cancelar
+  button.modal-close.is-large(onclick='toggleModal()')

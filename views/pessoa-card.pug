@@ -1,0 +1,22 @@
+.card.box(data-id=pessoa._id)
+  header
+    p.title= pessoa.nome
+    p.subtitle.is-size-6.
+      #[a(href='http://example.com') mmmok]
+      &bull;
+      #[span 1]
+      &bull;
+      #[span= pessoa.idade] anos
+  .card-content
+    //- Endereço
+    p.is-size-7.
+      #[span Rua Pinheiros] #[span 82] #[span APT 14]
+      #[br]
+      #[span Vila Nova] - #[span Rio] - #[span AM]
+  .buttons.is-right
+    button.button.is-small(
+      onclick=`editPessoa(${JSON.stringify(pessoa)})`
+    ) Editar
+    button.button.is-small.is-danger.is-outlined(
+      onclick=`sendRemovePessoa(${JSON.stringify(pessoa._id)})`
+    ) Remover

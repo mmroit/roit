@@ -1,0 +1,22 @@
+if pessoas.length
+  .container
+    section.level
+      .level-left
+        .level-item
+          p.subtitle.is-5.
+            #[strong= pessoas.length]
+            #{pessoas.length === 1 ? 'pessoa' : 'pessoas'}
+      .level-right
+        .level-item
+          button.button.is-success(onclick=`addPessoa()`) Adicionar
+    //- Listing
+    section
+      //- Items
+      section
+        each pessoa in pessoas
+          include pessoa-card
+      //- Pagination
+      section.section
+else
+  include no-data-hero
+include form-modal
