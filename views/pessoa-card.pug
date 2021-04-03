@@ -2,9 +2,9 @@
   header
     p.title= pessoa.nome
     p.subtitle.is-size-6.
-      #[a(href='http://example.com') mmmok]
+      #[a(href=pessoa.html_url)= pessoa.login]
       &bull;
-      #[span 1]
+      #[span= pessoa.score]
       &bull;
       #[span= pessoa.idade] anos
   .card-content

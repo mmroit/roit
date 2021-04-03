@@ -43,7 +43,7 @@ export class Pessoa {
   avatar_url?: string;
 
   @Prop()
-  url?: string;
+  html_url?: string;
 
   @Prop()
   score?: number;

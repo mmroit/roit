@@ -4,7 +4,7 @@
 
 class Form {
   static getFields() {
-    return JSON.stringify({
+    return {
       nome: $('.modal #nome.input').val(),
       idade: $('.modal #idade.input').val(),
       login: $('.modal #login.input').val(),
@@ -15,7 +15,7 @@ class Form {
       bairro: $('.modal #bairro.input').val(),
       localidade: $('.modal #localidade.input').val(),
       uf: $('.modal #uf.input').val(),
-    });
+    };
   }
 
   static setFields(pessoa) {
@@ -42,7 +42,9 @@ function editPessoa(pessoa) {
   Form.setFields(pessoa);
   $('.modal #form button#submit').off('click');
   $('.modal #form button#submit').on('click', toggleModal);
-  $('.modal #form button#submit').on('click', () => sendEditPessoa(pessoa._id));
+  $('.modal #form button#submit').on('click', () =>
+    sendEditPessoa(pessoa._id, pessoa.login),
+  );
   toggleModal();
 }
 
@@ -69,26 +71,56 @@ async function fetchAndUpdate(method, url, body, updateFn) {
 
 async function sendAddPessoa() {
   const url = `/pessoas`;
-  const body = Form.getFields();
-  fetchAndUpdate('POST', url, body, (content) => $('main').html(content));
+  const body = await addGithub(Form.getFields());
+  fetchAndUpdate('POST', url, JSON.stringify(body), (content) =>
+    $('main').html(content),
+  );
 }
 
-async function sendEditPessoa(id) {
+async function sendEditPessoa(id, prevLogin) {
   const url = `/pessoas/${id}`;
-  const body = Form.getFields();
-  fetchAndUpdate('PUT', url, body, (content) =>
+  let body = Form.getFields();
+  if (body.login !== prevLogin) {
+    body = await addGithub(body);
+  }
+  fetchAndUpdate('PUT', url, JSON.stringify(body), (content) =>
     $(`.card[data-id='${id}']`).html($(content).html()),
   );
 }
 
-async function sendRemovePessoa(id) {
+function sendRemovePessoa(id) {
   const url = `/pessoas/${id}`;
   fetchAndUpdate('DELETE', url, undefined, (content) =>
     $('main').html(content),
   );
 }
 
+async function addGithub(body) {
+  const res = Object.assign({}, body);
+  if (body.login) {
+    const github = await fetchGithub(body.login);
+    // Usar dados caso encontrado nome de usuário
+    if (github && github.login === body.login) {
+      ['avatar_url', 'html_url', 'score'].forEach((prop) => {
+        res[prop] = github[prop];
+      });
+    }
+  }
+  return res;
+}
+
 // Serviços
+
+async function fetchGithub(login) {
+  const url = `https://api.github.com/search/users?q=${login}`;
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+    return data?.items && data.items.length ? data.items[0] : undefined;
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 async function searchCep() {
   const cep = $('.modal #cep.input').val();
