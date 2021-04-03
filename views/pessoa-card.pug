@@ -10,9 +10,9 @@
   .card-content
     //- Endereço
     p.is-size-7.
-      #[span Rua Pinheiros] #[span 82] #[span APT 14]
+      #[span= pessoa.logradouro] #[span= pessoa.numero] #[span= pessoa.complemento]
       #[br]
-      #[span Vila Nova] - #[span Rio] - #[span AM]
+      #[span= pessoa.bairro] - #[span= pessoa.localidade] - #[span= pessoa.uf]
   .buttons.is-right
     button.button.is-small(
       onclick=`editPessoa(${JSON.stringify(pessoa)})`
