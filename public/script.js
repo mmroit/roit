@@ -55,6 +55,7 @@ function toggleModal() {
 // API
 
 async function sendAddPessoa() {
+  $('.modal #submit').addClass('is-loading');
   const url = `/pessoas`;
   try {
     const body = await addGithub(Form.getFields());
@@ -72,11 +73,13 @@ async function sendAddPessoa() {
       throw new Error(content.message.join(', '));
     }
   } catch (error) {
+    $('.modal #submit').removeClass('is-loading');
     createUpdateFailureFn('.modal .error', error);
   }
 }
 
 async function sendEditPessoa(id, prevLogin) {
+  $('.modal #submit').addClass('is-loading');
   const url = `/pessoas/${id}`;
   let body = Form.getFields();
   try {
@@ -91,23 +94,27 @@ async function sendEditPessoa(id, prevLogin) {
     if (new String(res.status).startsWith('2')) {
       toggleModal();
       const content = await res.text();
+      $('.modal #submit').removeClass('is-loading');
       $(`.card[data-id='${id}']`).html($(content).html());
     } else {
       const content = await res.json();
       throw new Error(content.message.join(', '));
     }
   } catch (error) {
+    $('.modal #submit').removeClass('is-loading');
     createUpdateFailureFn('.modal .error', error);
   }
 }
 
 async function sendRemovePessoa(id) {
+  $(`.card[data-id='${id}'] #remove`).addClass('is-loading');
   const url = `/pessoas/${id}`;
   try {
     const res = await fetch(url, { method: 'DELETE' });
     const content = await res.text();
     $('main').html(content);
   } catch (error) {
+    $(`.card[data-id='${id}'] #remove`).removeClass('is-loading');
     createUpdateFailureFn('main .top .error', error);
   }
 }
@@ -146,9 +153,11 @@ async function searchCep() {
     if (!cep) {
       throw new Error('cep inválido');
     }
+    $('#btn-cep').addClass('is-loading');
     const url = `https://viacep.com.br/ws/${cep}/json/`;
     const res = await fetch(url);
     const data = await res.json();
+    $('#btn-cep').removeClass('is-loading');
     if (data.cep) {
       $(`.modal #logradouro.input`).val(data.logradouro);
       $(`.modal #bairro.input`).val(data.bairro);
@@ -158,6 +167,7 @@ async function searchCep() {
       throw new Error('cep inválido');
     }
   } catch (error) {
+    $('#btn-cep').removeClass('is-loading');
     createUpdateFailureFn('.modal .error', error);
   }
 }

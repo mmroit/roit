@@ -17,6 +17,6 @@
     button.button.is-small(
       onclick=`editPessoa(${JSON.stringify(pessoa)})`
     ) Editar
-    button.button.is-small.is-danger.is-outlined(
+    button#remove.button.is-small.is-danger.is-outlined(
       onclick=`sendRemovePessoa(${JSON.stringify(pessoa._id)})`
     ) Remover
