@@ -1,14 +1,16 @@
 if pessoas.length
   .container
-    section.level
-      .level-left
-        .level-item
-          p.subtitle.is-5.
-            #[strong= pessoas.length]
-            #{pessoas.length === 1 ? 'pessoa' : 'pessoas'}
-      .level-right
-        .level-item
-          button.button.is-success(onclick=`addPessoa()`) Adicionar
+    .top
+      section.level
+        .level-left
+          .level-item
+            p.subtitle.is-5.
+              #[strong= pessoas.length]
+              #{pessoas.length === 1 ? 'pessoa' : 'pessoas'}
+        .level-right
+          .level-item
+            button.button.is-success(onclick=`addPessoa()`) Adicionar
+      .error
     //- Listing
     section
       //- Items

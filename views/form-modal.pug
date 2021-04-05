@@ -2,11 +2,12 @@
   .modal-background(onclick='toggleModal()')
   .modal-content
     #form.box
+      .error.block
       .field.is-grouped
         .control.is-expanded
           input#nome.input(type='text' placeholder='Nome')
         .control
-          input#idade.input(type='text' size='3' placeholder='Idade')
+          input#idade.input(type='text' placeholder='Idade' size='3')
       .field
         .control
           input#login.input(
@@ -14,7 +15,7 @@
           )
       hr
       .field.is-grouped
-        .control: input#cep.input(type='text' placeholder='CEP')
+        .control: input#cep.input(type='text' placeholder='CEP' size='8' maxlength='8')
         .control
           button.button.is-link.is-outlined(type='button' onclick='searchCep()') Buscar CEP
       .field.is-grouped
@@ -24,7 +25,7 @@
           )
         .control
           input#numero.input(
-            type='text' size='6' placeholder='Número'
+            type='text' placeholder='Número' size='6'
           )
       .field
         .control
@@ -40,7 +41,7 @@
             type='text' placeholder='Localidade'
           )
         .control
-          input#uf.input(type='text' size='2' placeholder='UF')
+          input#uf.input(type='text' placeholder='UF' size='2' maxlength='2')
       .buttons.is-right
         button#submit.button.is-success(type='button') Salvar
         button.button(
